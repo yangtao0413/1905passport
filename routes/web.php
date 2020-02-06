@@ -57,8 +57,10 @@ Route::get('/', function () {
 
 
 
-Route::post('/reg','Users\IndexController@reg');
-Route::post('/login','Users\IndexController@login');
-Route::any('/info','Users\IndexController@info');
-Route::any('/time','Users\IndexController@showTime');
+Route::post('/reg','Users\IndexController@reg');  //注册
+Route::post('/login','Users\IndexController@login');//登录
+Route::any('/info','Users\IndexController@info');//查看配置
+Route::any('/time','Users\IndexController@showTime');//获取数据
+
+Route::any('/auth','Users\IndexController@auth');//鉴权接口
 

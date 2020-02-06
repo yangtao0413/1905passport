@@ -20,14 +20,12 @@ class IndexController extends Controller
         $token = md5(time() . mt_rand(11111,99999) . $uid);
         return substr($token,5,20);
     }
-
-
-
     /**
      * 用户注册
      */
     public function reg(Request $request)
     {
+        // echo __METHOD__;die;
         //echo '<pre>';print_r($_POST);echo '</pre>';
         $pass1 = $request->input('pass1');
         $pass2 = $request->input('pass2');
@@ -91,7 +89,6 @@ class IndexController extends Controller
         }
         die(json_encode($response));
     }
-
     /**
      * 用户登录
      */
@@ -160,7 +157,6 @@ class IndexController extends Controller
         ];
         return $response;
     }
-
     /**
      * 获取用户信息接口
      */
@@ -199,5 +195,42 @@ class IndexController extends Controller
              ];
          }
          return $response;
+    }
+
+
+    /**
+     * 接口鉴权
+     * @return [type] [description]
+     */
+    public function auth()
+    {
+        $uid = $_POST['uid'];
+        $token = $_POST['token'];
+        if(empty($uid) || empty($token))
+        {
+            $response = [
+                'errno' => 40003,
+                'msg'   => 'Token Not Valid!'
+            ];
+            return $response;
+        }
+        $redis_token_key = 'str:user:token:'.$uid;
+        //验证token是否有效
+        $cache_token = Redis::get($redis_token_key);
+        if($token==$cache_token)        // token 有效
+        {
+            $data = date("Y-m-d H:i:s");
+            $response = [
+                'errno' => 0,
+                'msg'   => 'ok',
+                'data'  => $data
+            ];
+        }else{
+            $response = [
+                'errno' => 40003,
+                'msg'   => 'Token Not Valid!'
+            ];
+        }
+        return $response;
     }
 }
