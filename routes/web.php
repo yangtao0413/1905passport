@@ -64,3 +64,7 @@ Route::any('/time','Users\IndexController@showTime');//获取数据
 
 Route::any('/auth','Users\IndexController@auth');//鉴权接口
 
+
+
+Route::get('/test/check','TestController@md5test');//注册
+Route::post('/test/postqm2','TestController@postqm2');//验证签名
