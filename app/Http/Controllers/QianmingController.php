@@ -50,4 +50,19 @@ class QianmingController extends Controller
 
 
     }
+
+
+    public function decrypt2()
+    {
+        $enc_data_str=$_GET['data'];//接收数据
+        echo "接收的base64密文".$enc_data_str;echo'</br>';
+        $base64_decode_str=base64_decode($enc_data_str);
+        echo "base64decode密文".$base64_decode_str;echo'</br>';
+        echo '<hr>';
+        //解密
+        $pub_key=trim(file_get_contents(storage_path('keys/pub.key')));
+        openssl_public_decrypt($base64_decode_str,$dec_data,$pub_key);
+        echo "解密的数据".$dec_data;
+
+    }
 }

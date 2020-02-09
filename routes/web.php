@@ -66,5 +66,6 @@ Route::any('/auth','Users\IndexController@auth');//鉴权接口
 
 
 
-Route::get('/test/check','TestController@md5test');//注册
-Route::post('/test/postqm2','TestController@postqm2');//验证签名
+Route::get('/test/check','QianmingController@md5test');//注册
+Route::post('/test/postqm2','QianmingController@postqm2');//验证签名
+Route::get('/decrypt2','QianmingController@decrypt2');//非对称加密
